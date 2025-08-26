@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    /* Centrado horizontal */
+    align-items: flex-start;
+    /* Empieza desde arriba */
+    min-height: 100vh;
+    padding-top: 60px;
+    /* espacio desde arriba */
+}

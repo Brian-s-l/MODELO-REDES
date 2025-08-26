@@ -13,10 +13,11 @@ export class FloydComponent implements AfterViewInit, AfterViewChecked {
   modo: 'matriz' | 'canvas' = 'matriz';
 
   numNodos: number = 0;
-  // matriz puede contener strings (desde inputs) o números; convertimos antes de usarla
+  // nueva representación reactiva de la matriz y nombres
   matriz: (number | string)[][] = [];
   nombres: string[] = [];
 
+  // salidas (HTML ya generadas por tus funciones)
   iteracionesHtml: string = '';
   resultadoHtml: string = '';
 
@@ -37,8 +38,7 @@ export class FloydComponent implements AfterViewInit, AfterViewChecked {
   rehacerAcciones: any[] = [];
   imagenFondo: HTMLImageElement | null = null;
 
-  // next ahora acepta número o null
-  ultimoFloyd: { nombres: string[]; dist: number[][]; next: (number | null)[][] | null } | null = null;
+  ultimoFloyd: { nombres: string[]; dist: number[][]; next: number[][] | null } | null = null;
   aristasCaminoFinal: [number, number][] = [];
   nodosCaminoFinal: number[] = [];
 
@@ -80,22 +80,15 @@ export class FloydComponent implements AfterViewInit, AfterViewChecked {
 
   /***********************
    * UTILIDADES GENERALES
-   * generarTabla ahora acepta matrix:any[][] para evitar errores de tipo
    ***********************/
-  generarTabla(matrix: any[][], nombres: string[]): string {
-    const n = nombres.length;
+  generarTabla(matrix: number[][], nombres: string[]): string {
     let html = `<table class="table table-bordered table-sm"><thead><tr><th></th>`;
-    for (let j = 0; j < n; j++) html += `<th>${nombres[j]}</th>`;
+    for (let j = 0; j < nombres.length; j++) html += `<th>${nombres[j]}</th>`;
     html += `</tr></thead><tbody>`;
-    for (let i = 0; i < n; i++) {
+    for (let i = 0; i < nombres.length; i++) {
       html += `<tr><th>${nombres[i]}</th>`;
-      for (let j = 0; j < n; j++) {
-        const val = matrix[i] && matrix[i][j];
-        let cell = '';
-        if (val === this.INF || val === Infinity) cell = '∞';
-        else if (val === null || val === undefined) cell = '—';
-        else cell = String(val);
-        html += `<td>${cell}</td>`;
+      for (let j = 0; j < nombres.length; j++) {
+        html += `<td>${matrix[i][j] === this.INF ? "∞" : matrix[i][j]}</td>`;
       }
       html += `</tr>`;
     }
@@ -103,30 +96,19 @@ export class FloydComponent implements AfterViewInit, AfterViewChecked {
     return html;
   }
 
-  reconstruirRuta(i: number, j: number, next: (number | null)[][] | null, nombres: string[]): string[] {
+  reconstruirRuta(i: number, j: number, next: any[][], nombres: string[]): string[] {
     if (!next || next[i][j] === null) return [];
-    const ruta: string[] = [nombres[i]];
-    let cur = i;
-    // límite de seguridad para evitar bucles infinitos
-    const maxSteps = nombres.length * 2;
-    let steps = 0;
-    while (cur !== j && steps < maxSteps) {
-      const nx = next[cur][j];
-      if (nx === null || nx === undefined) break;
-      cur = nx;
-      ruta.push(nombres[cur]);
-      steps++;
+    let ruta = [nombres[i]];
+    while (i !== j) {
+      i = next[i][j];
+      ruta.push(nombres[i]);
     }
     return ruta;
   }
 
-  /**
-   * floydWarshall ahora trabaja con dist:number[][] (valores numéricos o Infinity)
-   * y devuelve next como (number|null)[][], iterHTML y numIter
-   */
   floydWarshall(dist: number[][], nombres: string[]) {
     const n = dist.length;
-    const next: (number | null)[][] = Array.from({ length: n }, () => Array(n).fill(null));
+    const next: any[][] = Array.from({ length: n }, () => Array(n).fill(null));
     for (let i = 0; i < n; i++) {
       for (let j = 0; j < n; j++) {
         if (i !== j && dist[i][j] !== this.INF) next[i][j] = j;
@@ -134,50 +116,19 @@ export class FloydComponent implements AfterViewInit, AfterViewChecked {
     }
 
     let iteracionesHtml = "";
-    // clonamos la matriz dist para mostrar los estados sin alterar referencias si quieres preservar original
-    const D = dist.map(row => row.slice());
-
     for (let k = 0; k < n; k++) {
       for (let i = 0; i < n; i++) {
         for (let j = 0; j < n; j++) {
-          const alt = (D[i][k] === this.INF || D[k][j] === this.INF) ? this.INF : D[i][k] + D[k][j];
-          if (alt < D[i][j]) {
-            D[i][j] = alt;
+          const alt = (dist[i][k] === this.INF || dist[k][j] === this.INF) ? this.INF : dist[i][k] + dist[k][j];
+          if (alt < dist[i][j]) {
+            dist[i][j] = alt;
             next[i][j] = next[i][k];
           }
         }
       }
-
-      // preparar matrizNext para mostrar: si next[i][j] es null mostrar '—', si es índice mostrar nombre del nodo
-      const matrixNextDisplay: any[][] = Array.from({ length: n }, () => Array(n).fill(null));
-      for (let i = 0; i < n; i++) {
-        for (let j = 0; j < n; j++) {
-          const v = next[i][j];
-          matrixNextDisplay[i][j] = (v === null || v === undefined) ? null : nombres[v];
-        }
-      }
-
-      const tablaDist = this.generarTabla(D, nombres);
-      const tablaNext = this.generarTabla(matrixNextDisplay, nombres);
-
-      iteracionesHtml += `
-        <div class="iteration mb-3 p-2" style="border:1px solid #eee; border-radius:6px;">
-          <h5>Iteración ${k + 1} (Nodo intermedio: ${nombres[k] || k})</h5>
-          <div class="row">
-            <div class="col-md-6">
-              <h6>Matriz de distancias</h6>
-              ${tablaDist}
-            </div>
-            <div class="col-md-6">
-              <h6>Matriz de recorrido (next)</h6>
-              ${tablaNext}
-            </div>
-          </div>
-        </div>
-      `;
+      iteracionesHtml += `<div class="iteration"><h5>Iteración ${k + 1} (Nodo intermedio: ${nombres[k]})</h5>${this.generarTabla(dist, nombres)}</div>`;
     }
-
-    return { dist: D, next, iterHTML: iteracionesHtml, numIter: n };
+    return { dist, next, iterHTML: iteracionesHtml };
   }
 
   /***********************
@@ -188,7 +139,9 @@ export class FloydComponent implements AfterViewInit, AfterViewChecked {
       alert("Ingrese un número válido de nodos");
       return;
     }
+    // nombres por defecto
     this.nombres = Array.from({ length: this.numNodos }, (_, i) => "N" + (i + 1));
+    // matriz inicial: 0 en diagonal, '' (vacío = ∞) fuera diagonal
     this.matriz = Array.from({ length: this.numNodos }, (_, i) =>
       Array.from({ length: this.numNodos }, (_, j) => (i === j ? 0 : ""))
     );
@@ -203,24 +156,26 @@ export class FloydComponent implements AfterViewInit, AfterViewChecked {
       return;
     }
 
+    // recopilar nombres: si el usuario los editó en el template, están en this.nombres
     const nombres: string[] = this.nombres.map((nm, idx) => (nm && nm.trim()) ? nm.trim() : ("N" + (idx + 1)));
 
-    // convertir this.matriz (number|string)[][] a number[][] respetando ''/'∞'/null => INF
+    // construir dist con reglas: '' o '∞' o null => INF
     let dist: number[][] = Array.from({ length: n }, () => Array(n).fill(this.INF));
     for (let i = 0; i < n; i++) dist[i][i] = 0;
 
     for (let i = 0; i < n; i++) {
       for (let j = 0; j < n; j++) {
+        const raw = this.matriz[i][j];
         if (i === j) { dist[i][j] = 0; continue; }
-        const raw = this.matriz[i] ? this.matriz[i][j] : null;
         if (raw === "" || raw === null || raw === undefined) continue;
+        // aceptar símbolo infinito '∞' o 'inf' también
         if (typeof raw === "string" && (raw.trim() === "" || raw.trim() === "∞" || raw.trim().toLowerCase() === "inf")) continue;
         const num = typeof raw === "number" ? raw : parseFloat(String(raw));
         if (!isNaN(num)) dist[i][j] = num;
       }
     }
 
-    const { dist: D, next, iterHTML, numIter } = this.floydWarshall(dist, nombres);
+    const { dist: D, next, iterHTML } = this.floydWarshall(dist, nombres);
     this.iteracionesHtml = iterHTML;
 
     let resultadoHtml = `<div class="result-paths"><h4>Rutas más cortas finales</h4><ul>`;
@@ -235,7 +190,7 @@ export class FloydComponent implements AfterViewInit, AfterViewChecked {
         }
       }
     }
-    resultadoHtml += `</ul><p class="mt-2"><strong>Total de iteraciones:</strong> ${numIter}</p></div>`;
+    resultadoHtml += `</ul></div>`;
     this.resultadoHtml = resultadoHtml;
 
     this.ultimoFloyd = { nombres, dist: D, next };
@@ -447,12 +402,14 @@ export class FloydComponent implements AfterViewInit, AfterViewChecked {
     const n = this.nodos.length;
     if (n === 0) { alert("No hay nodos en el Canvas."); return; }
     this.numNodos = n;
+    // llenar nombres según nodos
     this.nombres = this.nodos.map(nod => nod.nombre || ("N" + (this.nodos.indexOf(nod) + 1)));
+    // construir matriz desde grafo (numérico y ∞ donde no hay arista)
     const { dist } = this.construirMatrizDesdeGrafo();
-    // guardamos '' donde no hay arista para que el UI muestre vacío en inputs
     this.matriz = Array.from({ length: n }, (_, i) =>
       Array.from({ length: n }, (_, j) => (dist[i][j] === this.INF ? "" : dist[i][j]))
     );
+    // cambiar a modo matriz y scrollear
     this.modo = 'matriz';
     this.iteracionesHtml = '';
     this.resultadoHtml = '';
@@ -462,7 +419,7 @@ export class FloydComponent implements AfterViewInit, AfterViewChecked {
   ejecutarFloydCanvas() {
     if (this.nodos.length === 0) { this.resultadoCanvasHtml = `<div class="alert alert-warning">No hay nodos/aristas.</div>`; return; }
     const { nombres, dist } = this.construirMatrizDesdeGrafo();
-    const { dist: D, next, iterHTML, numIter } = this.floydWarshall(dist, nombres);
+    const { dist: D, next, iterHTML } = this.floydWarshall(dist, nombres);
     this.iteracionesCanvasHtml = iterHTML;
 
     let resultadoHtml = `<div class="result-paths"><h4>Rutas más cortas finales</h4><ul>`;
@@ -477,7 +434,7 @@ export class FloydComponent implements AfterViewInit, AfterViewChecked {
         }
       }
     }
-    resultadoHtml += `</ul><p class="mt-2"><strong>Total de iteraciones:</strong> ${numIter}</p></div>`;
+    resultadoHtml += `</ul></div>`;
     this.resultadoCanvasHtml = resultadoHtml;
 
     this.ultimoFloyd = { nombres, dist: D, next };
