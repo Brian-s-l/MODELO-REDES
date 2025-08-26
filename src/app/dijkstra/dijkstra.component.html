@@ -1,0 +1,29 @@
+<p>dijkstra works!</p>
+<div class="container">
+    <h2 class="my-3">Algoritmo de Dijkstra</h2>
+
+    <canvas id="canvas" width="800" height="500"></canvas>
+
+    <div class="mb-3">
+        <label for="imagenFondo" class="form-label">Fondo:</label>
+        <input type="file" id="imagenFondo" accept="image/*" class="form-control d-inline-block w-auto">
+        <button onclick="quitarFondo()" class="btn btn-danger btn-sm">🗑️ Quitar fondo</button>
+    </div>
+
+    <div id="panel" class="mb-4">
+        <button onclick="undo()" class="btn btn-warning btn-sm">⭯ Deshacer</button>
+        <button onclick="redo()" class="btn btn-info btn-sm">⭮ Rehacer</button><br><br>
+        <label>Origen:</label>
+        <select id="origen" class="form-select d-inline-block w-auto"></select>
+        <label>Destino:</label>
+        <select id="destino" class="form-select d-inline-block w-auto"></select>
+        <button onclick="calcularDijkstra()" class="btn btn-primary">🔍 Buscar caminos mínimos</button>
+        <button id="btnMostrar" onclick="mostrarPasos()" class="btn btn-success" disabled>👣 Mostrar pasos</button>
+        <div id="resultado" class="alert alert-info mt-3"></div>
+    </div>
+
+    <!-- Tabla resumen -->
+    <div id="tablaContainer" class="mb-4"></div>
+    <!-- Contenedor de pasos -->
+    <div id="canvasesIteraciones"></div>
+</div>

@@ -1,0 +1,195 @@
+/* ============================= */
+/* 🌌 Fondo animado futurista    */
+/* ============================= */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(-45deg, #1d2671, #c33764, #0f2027, #2c5364);
+    background-size: 400% 400%;
+    animation: gradientBG 12s ease infinite;
+    color: #fff;
+    text-align: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ============================= */
+/* ✨ Títulos animados           */
+/* ============================= */
+h2 {
+    font-size: 2.2rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #ff8a00, #e52e71, #9c27b0, #2196f3);
+    background-size: 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textGradient 6s infinite;
+}
+
+@keyframes textGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ============================= */
+/* 🎨 Canvas estilizado          */
+/* ============================= */
+canvas {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(6px);
+    transition: transform 0.3s;
+    cursor: crosshair;
+}
+
+canvas:hover {
+    transform: scale(1.01);
+}
+
+/* ============================= */
+/* 🖲️ Botones futuristas 3D      */
+/* ============================= */
+button {
+    position: relative;
+    display: inline-block;
+    margin: 8px;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #6a11cb, #2575fc);
+    box-shadow: 0 6px #1b1b2f;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+}
+
+button:active {
+    transform: translateY(2px);
+    box-shadow: 0 3px #1b1b2f;
+}
+
+/* Botón rojo especial */
+button.btn-danger {
+    background: linear-gradient(145deg, #ff4b2b, #ff416c);
+    box-shadow: 0 6px #5a000e;
+}
+
+button.btn-warning {
+    background: linear-gradient(145deg, #f7971e, #ffd200);
+}
+
+button.btn-info {
+    background: linear-gradient(145deg, #00c6ff, #0072ff);
+}
+
+button.btn-success {
+    background: linear-gradient(145deg, #11998e, #38ef7d);
+}
+
+/* ============================= */
+/* 📝 Tablas elegantes           */
+/* ============================= */
+table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    font-size: 14px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+}
+
+th,
+td {
+    padding: 10px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    color: #fff;
+}
+
+th {
+    background: rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ============================= */
+/* 📜 Resultado resaltado         */
+/* ============================= */
+#resultado {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 16px;
+    white-space: pre-line;
+    padding: 15px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================= */
+/* 🌀 Iteraciones animadas        */
+/* ============================= */
+.iteracion-block {
+    margin: 30px auto;
+    padding: 15px;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 1s ease forwards;
+    max-width: 80%;
+}
+
+.iteracion-block h4 {
+    margin-bottom: 10px;
+    color: #ffcc70;
+    text-shadow: 0 0 10px #ffcc70;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
