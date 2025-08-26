@@ -1,3 +1,4 @@
+/* styles.css */
 html,
 body {
     height: 100%;
@@ -5,12 +6,20 @@ body {
 }
 
 body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+
+    /* Fondo GIF */
+    background: url('/fondo.gif') no-repeat center center fixed;
+    background-size: cover;
+    /* Hace que se estire a toda la pantalla */
+
     display: flex;
     justify-content: center;
     /* Centrado horizontal */
     align-items: flex-start;
     /* Empieza desde arriba */
-    min-height: 100vh;
     padding-top: 60px;
     /* espacio desde arriba */
 }

@@ -1,11 +1,21 @@
-<div class="container text-center mt-5">
-    <h2>Selecciona el algoritmo</h2>
+<div class="home-panel">
+    <h2 class="animated-title">Selecciona el algoritmo</h2>
 
-    <button class="btn btn-primary m-2" [routerLink]="['/dijkstra']">
-        DIJKSTRA
-    </button>
+    <div class="button-group">
+        <!-- Dijkstra -->
+        <div class="algo-button">
+            <img src="d.jpg" alt="Dijkstra" class="algo-img" />
+            <button class="btn btn-primary" [routerLink]="['/dijkstra']">
+                DIJKSTRA
+            </button>
+        </div>
 
-    <button class="btn btn-secondary m-2" [routerLink]="['/floyd']">
-        FLOYD
-    </button>
+        <!-- Floyd -->
+        <div class="algo-button">
+            <img src="f.jpg" alt="Floyd" class="algo-img" />
+            <button class="btn btn-secondary" [routerLink]="['/floyd']">
+                FLOYD
+            </button>
+        </div>
+    </div>
 </div>

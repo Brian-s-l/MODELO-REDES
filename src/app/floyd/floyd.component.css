@@ -1,126 +1,357 @@
-/* ======= ESTILOS GENERALES ======= */
+/* 🌌 ======= ESTILOS GENERALES ======= */
 .container {
     max-width: 1200px;
 }
 
 h2 {
-    font-weight: 700;
-    color: #2c3e50;
+    font-weight: 800;
+    font-size: 2rem;
+    background: linear-gradient(90deg, #00c6ff, #0072ff, #00ffcc, #ff00cc);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientText 8s ease infinite;
 }
 
-/* ======= NAV TABS ======= */
+@keyframes gradientText {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* 🌈 ======= NAV TABS ======= */
 .nav-tabs {
-    border-bottom: 2px solid #ddd;
+    border-bottom: none;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
 .nav-tabs .nav-link {
     border: none;
     padding: 0.75rem 1.5rem;
-    font-weight: 500;
-    color: #555;
-    border-radius: 0.5rem 0.5rem 0 0;
-    transition: all 0.2s ease;
+    font-weight: 600;
+    color: #ffffff;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
 }
 
 .nav-tabs .nav-link:hover {
-    background-color: #f5f5f5;
-    color: #000;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
 }
 
 .nav-tabs .nav-link.active {
-    background: #0d6efd;
+    background: linear-gradient(135deg, #0d6efd, #00c6ff);
     color: #fff;
-    font-weight: 600;
-    box-shadow: 0 -2px 6px rgba(13, 110, 253, 0.3) inset;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+    transform: scale(1.05);
 }
 
-/* ======= FORMULARIOS ======= */
+/* 📋 ======= FORMULARIOS ======= */
 .form-label {
-    font-weight: 500;
-    color: #444;
+    font-weight: 600;
+    color: #e0e0e0;
 }
 
 input.form-control,
 select.form-select {
-    border-radius: 0.5rem;
-    box-shadow: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 0.75rem;
+    border: 1px solid transparent;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    transition: all 0.3s ease;
 }
 
 input.form-control:focus,
 select.form-select:focus {
     border-color: #0d6efd;
-    box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
+    box-shadow: 0 0 12px rgba(13, 110, 253, 0.35);
+    background: rgba(255, 255, 255, 0.1);
 }
 
-/* ======= BOTONES ======= */
+/* 🔘 ======= BOTONES ======= */
 .btn {
-    border-radius: 0.5rem;
-    font-weight: 500;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::after {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 300%;
+    background: linear-gradient(120deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent);
+    transform: rotate(25deg);
+    transition: all 0.5s ease;
+}
+
+.btn:hover::after {
+    top: -50%;
 }
 
 .btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
-/* ======= CANVAS ======= */
+/* 🖼️ ======= CANVAS ======= */
 canvas {
-    border-radius: 0.75rem;
-    border: 2px solid #ddd !important;
-    background: #fdfdfd !important;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+    border: 2px solid transparent !important;
+    background: rgba(255, 255, 255, 0.07) !important;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease;
 }
 
-/* ======= TARJETAS ======= */
+canvas:hover {
+    transform: scale(1.02);
+}
+
+/* 🧩 ======= TARJETAS ======= */
 .tools-card {
-    border-radius: 1rem;
+    border-radius: 1.25rem;
     border: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    background: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease;
+}
+
+.tools-card:hover {
+    transform: translateY(-5px) scale(1.02);
 }
 
 .tools-card .card-title {
-    font-weight: 600;
-    color: #2c3e50;
+    font-weight: 700;
+    color: #ffffff;
 }
 
 hr {
-    border-color: #eee;
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
-/* ======= TABLAS (matriz / resultados) ======= */
+/* 📊 ======= TABLAS ======= */
 table {
-    border-radius: 0.5rem;
+    border-radius: 0.75rem;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
 }
 
 table th {
-    background: #f8f9fa;
-    font-weight: 600;
+    background: linear-gradient(135deg, #0d6efd, #00c6ff);
+    color: #fff;
+    font-weight: 700;
     text-align: center;
+    padding: 0.75rem;
 }
 
 table td {
     text-align: center;
     vertical-align: middle;
+    padding: 0.75rem;
+    color: #e0e0e0;
 }
 
-/* ======= TEXTO AUXILIAR ======= */
+/* ✨ ======= TEXTO AUXILIAR ======= */
 .small-muted {
-    font-size: 0.85rem;
-    color: #6c757d;
+    font-size: 0.9rem;
+    color: #bbbbbb;
 }
 
 .canvas-container canvas {
     margin-top: 2rem;
-    /* espacio arriba */
     margin-bottom: 1rem;
-    /* opcional: espacio abajo */
-    border-radius: 8px;
-    /* bordes redondeados, más moderno */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    /* sombra ligera */
+    border-radius: 1rem;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease;
+}
+
+.canvas-container canvas:hover {
+    transform: scale(1.03);
+}
+
+/* Contenedor principal */
+.col-12 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* Espacio entre secciones */
+    padding: 20px;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.3);
+    /* Fondo translúcido */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    /* Efecto de vidrio esmerilado */
+    transition: transform 0.3s ease;
+}
+
+.col-12:hover {
+    transform: scale(1.01);
+}
+
+/* Estilo general para cada bloque interno */
+#previewMatrizDesdeCanvas,
+#iteracionesCanvas,
+#resultadoCanvas {
+    padding: 15px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: auto;
+    /* Para tablas grandes */
+    transition: background 0.4s ease;
+}
+
+/* Hover animado */
+#previewMatrizDesdeCanvas:hover,
+#iteracionesCanvas:hover,
+#resultadoCanvas:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Animación sutil para los títulos internos */
+#previewMatrizDesdeCanvas::before,
+#iteracionesCanvas::before,
+#resultadoCanvas::before {
+    content: attr(id);
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #00e5ff;
+    animation: glowText 3s infinite alternate;
+}
+
+/* Glow animado RGB */
+@keyframes glowText {
+    0% {
+        color: #ff0080;
+        text-shadow: 0 0 8px #ff0080;
+    }
+
+    33% {
+        color: #00ffcc;
+        text-shadow: 0 0 8px #00ffcc;
+    }
+
+    66% {
+        color: #00a2ff;
+        text-shadow: 0 0 8px #00a2ff;
+    }
+
+    100% {
+        color: #ffcc00;
+        text-shadow: 0 0 8px #ffcc00;
+    }
+}
+
+/* Contenedor principal */
+.col-12 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* Espacio entre secciones */
+    padding: 20px;
+    border-radius: 16px;
+    background: transparent;
+    /* Fondo transparente */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+}
+
+.col-12:hover {
+    transform: scale(1.01);
+}
+
+/* Estilo general para cada bloque interno */
+#previewMatrizDesdeCanvas,
+#iteracionesCanvas,
+#resultadoCanvas {
+    padding: 15px;
+    border-radius: 12px;
+    background: transparent;
+    /* Fondo transparente */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: auto;
+    /* Para tablas grandes */
+    transition: transform 0.4s ease;
+}
+
+/* Hover animado (solo cambia borde/sombra, no fondo) */
+#previewMatrizDesdeCanvas:hover,
+#iteracionesCanvas:hover,
+#resultadoCanvas:hover {
+    transform: scale(1.02);
+    border-color: #00e5ff;
+    box-shadow: inset 0 0 15px rgba(0, 229, 255, 0.5);
+}
+
+/* Animación sutil para los títulos internos */
+#previewMatrizDesdeCanvas::before,
+#iteracionesCanvas::before,
+#resultadoCanvas::before {
+    content: attr(id);
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #00e5ff;
+    animation: glowText 3s infinite alternate;
+}
+
+/* Glow animado RGB */
+@keyframes glowText {
+    0% {
+        color: #ff0080;
+        text-shadow: 0 0 8px #ff0080;
+    }
+
+    33% {
+        color: #00ffcc;
+        text-shadow: 0 0 8px #00ffcc;
+    }
+
+    66% {
+        color: #00a2ff;
+        text-shadow: 0 0 8px #00a2ff;
+    }
+
+    100% {
+        color: #ffcc00;
+        text-shadow: 0 0 8px #ffcc00;
+    }
 }

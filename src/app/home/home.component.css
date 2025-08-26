@@ -1,8 +1,80 @@
-h2 {
-    margin-bottom: 20px;
+/* Panel transparente */
+.home-panel {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 600px;
+    margin: 100px auto;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
 }
 
+/* Texto animado RGB */
+.animated-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    background: linear-gradient(270deg,
+            #ff0000,
+            #ff7f00,
+            #ffff00,
+            #00ff00,
+            #0000ff,
+            #4b0082,
+            #8f00ff);
+    background-size: 1400% 1400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rgbAnimation 10s linear infinite;
+}
+
+@keyframes rgbAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Botones con imágenes encima */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.algo-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.algo-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.algo-img:hover {
+    transform: scale(1.1);
+}
+
+/* Estilos de botones */
 button {
-    min-width: 120px;
+    min-width: 140px;
     font-size: 16px;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-weight: bold;
 }
